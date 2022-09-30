@@ -13,8 +13,14 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, ul, fieldset, p {
+h1, h2, h3, h4, ul, p {
   margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
 ul {

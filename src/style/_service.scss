@@ -5,9 +5,13 @@
   display: grid;
   grid-template-areas:
     'avatar present price'
-    '. . review';
+    'contacts contacts review';
   grid-template-columns: 50px 1fr max-content;
   gap: 20px 24px;
+
+  &_person {
+    gap: 40px 14px;
+  }
 
   &__avatar {
     grid-area: avatar;
@@ -35,20 +39,48 @@
     text-align: right;
   }
 
+  &__contacts {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    &_phone:before {
+      background-image: url("img/phone.svg");
+    }
+
+    &_email:before {
+      background-image: url("img/email.svg");
+    }
+  }
+
   &__review {
     grid-area: review;
     display: flex;
     gap: 16px;
-  }
-
-  &__stars {
-    display: flex;
-    gap: 2px;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
   }
 
   &__count-review {
-    padding: 18px;
+    padding-left: 18px;
     background: url('img/icon-comment.svg') left/14px no-repeat;
     align-items: center;
   }

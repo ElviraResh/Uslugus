@@ -9,7 +9,6 @@
     'logo . .'
     'copyright . contact';
     gap: 14px;
-    align-items: end;
   }
   &__logo {
     grid-area: logo;
@@ -17,6 +16,7 @@
 
   &__copyright {
     grid-area: copyright;
+    align-self: end;
   }
 
   &__contact {
