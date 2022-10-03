@@ -40,7 +40,7 @@
   }
 
   &__contacts {
-    grid-column: span 2;
+    grid-area: contacts;
     display: flex;
     flex-direction: column;
     gap: 8px;
