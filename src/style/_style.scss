@@ -61,7 +61,17 @@ img {
 }
 
 .container {
-  max-width: 1180px;
-  padding: 20px 0;
+  max-width: 1220px;
+  padding: 0 20px;
   margin: 0 auto;
+
+  @include laptop {
+    max-width: 820px;
+  }
+
+  @include tablet {
+    max-width: 620px;
+  }
 }
+
+

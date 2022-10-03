@@ -4,6 +4,10 @@
     font-weight: 400;
     font-size: 24px;
     margin-bottom: 16px;
+
+    @include mobile {
+      font-size: 18px;
+    }
   }
 
   &__list {
@@ -11,6 +15,10 @@
     flex-direction: column;
     gap: 10px;
     margin-bottom: 16px;
+
+    @include mobile {
+      margin-bottom: 8px;
+    }
   }
 
   &__item {
@@ -28,6 +36,10 @@
   &__name {
     font-weight: 400;
     font-size: 16px;
+
+    @include mobile {
+      font-size: 14px;
+    }
   }
 
   &__stars {
@@ -44,6 +56,11 @@
     font-size: 16px;
     line-height: 19px;
     height: calc(19px * 2);
+
+    @include mobile {
+      font-size: 14px;
+    }
+
     &_open {
       display: block;
       height: unset;
