@@ -36,6 +36,11 @@
     background-color: #F2F5FC;
     border-radius: 12px;
     padding: 24px 20px 30px;
+
+    @include mini {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 
   &__container {
