@@ -9,6 +9,7 @@ import {getCategory} from "./modules/getCategory";
 import {renderList} from "./modules/renderList";
 import {searchControl} from "./modules/searchControl";
 import {choiceCategory} from "./modules/choiceCategory";
+import {ratingController} from "./modules/ratingController";
 
 const init = () => {
   modalController({
@@ -69,6 +70,7 @@ const init = () => {
   renderList();
   searchControl();
   choiceCategory();
+  ratingController();
 }
 
 init();
