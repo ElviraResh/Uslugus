@@ -203,6 +203,15 @@ function getItems(itemId) {
   return item;
 }
 
+function findItems(reqData) {
+  const data = JSON.parse(readFileSync(DB_FILE) || "[]");
+  const item = data.services.find(({ email }) => reqData.email.toLowerCase() === email.toLowerCase());
+  if (!item) throw new ApiError(404, { message: "Item Not Found" });
+  if (item.password !== reqData.password) throw new ApiError(404, { message: "Wrong password" });
+  delete item.password;
+  return item;
+}
+
 
 function updateItems(itemId, newService) {
   const data = getItemsList({getpassword: true});
@@ -242,7 +251,6 @@ function deleteItems(itemId) {
 function addComment(itemId, comment) {
   const errors = [];
 
-
   if (!comment.name) {
     errors.push({ field: "name", message: "Нет имени" });
   }
@@ -251,12 +259,12 @@ function addComment(itemId, comment) {
     errors.push({ field: "phone", message: "Нет телефона" });
   }
 
-  if (!comment.comment) {
-    errors.push({ field: "name", message: "Нет комментария" });
+  if (!comment.text) {
+    errors.push({ field: "text", message: "Нет комментария" });
   }
 
-  if (!comment.star) {
-    errors.push({ field: "star", message: "Нет оценки" });
+  if (!comment.stars) {
+    errors.push({ field: "stars", message: "Нет оценки" });
   }
 
   if (errors.length) throw new ApiError(422, { errors });
@@ -327,18 +335,27 @@ module.exports = server = createServer(async (req, res) => {
     const body = await (async () => {
       if (uri === "" || uri === "/") {
         if (req.method === "GET") return getItemsList(queryParams);
-        if (req.method === "POST") {
+      } else {
+        const itemId = uri.substring(1);
+        if (req.method === "GET") return getItems(itemId);
+        if (req.method === 'POST' && uri.includes('signup')) {
           const createdItem = createItems(await drainJson(req));
           res.statusCode = 201;
           res.setHeader("Access-Control-Expose-Headers", "Location");
           res.setHeader("Location", `${URI_PREFIX}/${createdItem.id}`);
           return createdItem;
         }
-      } else {
-        const itemId = uri.substring(1);
-        if (req.method === "GET") return getItems(itemId);
+        if (req.method === 'POST' && uri.includes('signin')) {
+          const findItem = findItems(await drainJson(req));
+          res.statusCode = 201;
+          res.setHeader("Access-Control-Expose-Headers", "Location");
+          res.setHeader("Location", `${URI_PREFIX}/${findItem.id}`);
+          return findItem;
+        }
         if (req.method === 'POST' && uri.includes('comment')) {
-          return addComment(uri.substring(9), await drainJson(req))
+          const createdComment = addComment(uri.substring(9), await drainJson(req))
+          res.statusCode = 201;
+          return createdComment;
         }
         if (req.method === "PATCH")
           return updateItems(itemId, await drainJson(req));
@@ -368,10 +385,12 @@ module.exports = server = createServer(async (req, res) => {
       console.log(`GET /api/category - получить список категорий`);
       console.log(`GET ${URI_PREFIX} - получить список услуг`);
       console.log(`GET ${URI_PREFIX}?{search=""} - поиск услуги по имени и описанию`);
-      console.log(`POST ${URI_PREFIX} - создать услугу, в теле запроса нужно передать объект`);
+      console.log(`POST ${URI_PREFIX}/signup - Зарегистрировать специалиста, в теле запроса нужно передать объект`);
+      console.log(`POST ${URI_PREFIX}/signin - Псевдоавторизация, отправьте email и пароль`);
       console.log(`GET ${URI_PREFIX}/{id} - получить услуги по его ID`);
       console.log(`PATCH ${URI_PREFIX}/{id} - изменить услугу с ID, в теле запроса нужно передать объект`);
       console.log(`DELETE ${URI_PREFIX}/{id} - удалить услугу по ID`);
+      console.log(`POST ${URI_PREFIX}/comment/{id} - добавить комментарий`);
     }
   })
   .listen(PORT);

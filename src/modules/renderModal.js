@@ -4,8 +4,9 @@ import {store} from "./store";
 import {createStars} from "./createStars";
 import {createReview} from "./createReview";
 import {ratingController} from "./ratingController";
+import {commentFormController} from "./commentFormController";
 
-export const renderModal = (parent, data) => {
+export const renderModal = (parent, data, closeModal) => {
   parent.textContent = '';
 
   const body = createElement('div', {
@@ -211,5 +212,7 @@ export const renderModal = (parent, data) => {
       <path d="M18.75 5.25L5.25 18.75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M18.75 18.75L5.25 5.25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-  `
+  `;
+
+  commentFormController(formReview, closeModal);
 }

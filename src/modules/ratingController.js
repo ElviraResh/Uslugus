@@ -1,5 +1,3 @@
-import {createElement} from "./createElement";
-
 export const ratingController = (stars, ratingInput) => {
 
   stars.addEventListener('click', ({target, currentTarget}) => {

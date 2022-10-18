@@ -25,8 +25,7 @@ export const createReview = comments => {
       className: 'review__text',
       textContent: comment.text,
     }, reviewItem);
-
-  })
+  });
 
   return reviewList;
 }

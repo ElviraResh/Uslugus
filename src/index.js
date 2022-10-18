@@ -4,35 +4,44 @@ import {modalController} from "./modules/modalController";
 import {selectController} from "./modules/selectController";
 import {showPassword} from "./modules/showPassword";
 import {choicesController} from "./modules/choicesController";
-import {avatarController} from "./modules/avatarController";
 import {getCategory} from "./modules/getCategory";
 import {renderList} from "./modules/renderList";
 import {searchControl} from "./modules/searchControl";
 import {choiceCategory} from "./modules/choiceCategory";
 import {ratingController} from "./modules/ratingController";
+import {signInController, signUpController} from "./modules/sign";
+import {API_URL} from "./modules/const";
+import {getData} from "./modules/getData";
+import {renderModal} from "./modules/renderModal";
 
-const init = () => {
-  modalController({
+const init = async () => {
+  await getCategory();
+  renderList();
+
+  const eventModalSignIn = modalController({
     modal: '.modal_sign-in',
     btnOpen: '.header__auth-btn_sign-in',
     btnClose: '.modal__close'
   })
 
-  modalController({
+  const eventModalSignUp = modalController({
     modal: '.modal_sign-up',
     btnOpen: '.header__auth-btn_sign-up',
-    btnClose: '.modal__close'
+    btnClose: '.modal__close',
+    /*handlerCloseModal: () => {
+      const form = document.querySelector('.form-sign-up');
+      form.reset();
+    },*/
   })
 
   modalController({
     modal: '.modal_person',
     btnOpen: '.service',
-    parrentBtns: '.services__list',
+    parentBtns: '.services__list',
     btnClose: '.modal__close',
-    handlerOpenModal: async () => {
-      const data = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-        .then(response => response.json());
-
+    handlerOpenModal: async ({handler, modalElem, closeModal}) => {
+      const data = await getData(`${API_URL}/api/service/${handler.dataset.id}`);
+      renderModal(modalElem, data, closeModal);
       const comments = document.querySelectorAll('.review__text');
 
       comments.forEach((comment) => {
@@ -61,16 +70,15 @@ const init = () => {
   });
   showPassword();
   choicesController();
-  const crp = avatarController({
-    inputFile: '.avatar__input',
-    uploadResult: '.avatar__result',
-  });
 
-  getCategory();
-  renderList();
+
+
+
   searchControl();
   choiceCategory();
-  ratingController();
+
+  signUpController(eventModalSignUp.closeModal);
+  signInController(eventModalSignIn.closeModal);
 }
 
 init();

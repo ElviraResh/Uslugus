@@ -46,7 +46,6 @@ export const createCard = (item) => {
 
   service.append(serviceAvatar, servicePresent, servicePrice, serviceReview);
 
-
   return serviceItem;
 }
 

@@ -31,6 +31,16 @@
     background: #FFFFFF;
     border-radius: 8px;
 
+    &:nth-child(n+4) {
+      display: none;
+    }
+
+  }
+
+  &_show-all {
+    .review__item {
+      display: grid;
+    }
   }
 
   &__name {

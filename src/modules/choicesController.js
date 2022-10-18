@@ -7,10 +7,13 @@ export const choicesController = () => {
     itemSelectText: '',
   };
 
-  new Choices('.form__select-category', {...option, classNames:{
+  const selectCategory = document.querySelector('.form__select-category');
+  selectCategory._choices = new Choices(selectCategory, {...option, classNames: {
     containerOuter: 'choices form__select-category',
     }});
-  new Choices('.form__select-price', {...option, classNames:{
+
+  const selectPrice = document.querySelector('.form__select-price');
+  selectPrice._choices = new Choices(selectPrice, {...option, classNames: {
       containerOuter: 'choices form__select-price',
     }});
 }

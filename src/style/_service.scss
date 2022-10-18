@@ -1,6 +1,7 @@
 .service {
   padding: 24px;
   background-color: #FFFFFF;
+  border: 1px solid transparent;
   border-radius: 8px;
   display: grid;
   grid-template-areas:
@@ -8,6 +9,11 @@
     'contacts contacts review';
   grid-template-columns: 50px 1fr max-content;
   gap: 20px 24px;
+  transition: border .2s ease-in-out;
+
+  &:hover {
+    border: 1px solid #E5C207;
+  }
 
   @include mobile {
     grid-template-areas:

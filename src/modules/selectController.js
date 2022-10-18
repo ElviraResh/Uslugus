@@ -41,4 +41,5 @@ export const selectController = ({
     }
   });
 
+  return data;
   }
