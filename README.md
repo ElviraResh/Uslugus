@@ -26,3 +26,8 @@ npm run build:prod
 ```shell
 npm run clear
 ```
+
+# API
+
+Для запуска Api-uslugus через Git Bash используйте команду node index
+
